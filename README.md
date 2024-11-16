@@ -49,3 +49,7 @@ pub const XOSC_CRYSTAL_FREQ: u32 = 12_000_000;
 
 there is a package, critical-section, its version is changed from 1.2.0 to ```1.1.1```. this may be critical to make the code to run.
 
+### multicore
+
+The version of critical-section is changed from 1.2.0 to 1.1.1.
+
