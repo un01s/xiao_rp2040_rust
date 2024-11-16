@@ -53,3 +53,19 @@ there is a package, critical-section, its version is changed from 1.2.0 to ```1.
 
 The version of critical-section is changed from 1.2.0 to 1.1.1.
 
+In the example code running on the XIAO RP2040, there are two additional dependencies for WS2812B RGB LED.
+
+```
+ws2812-pio = "0.4.0"
+smart-leds = "0.3.0"
+```
+
+However, with these two, cargo has problems with rp2040_hal version 0.10. Update both to the latest as follows to see if the build is OK.
+
+```
+ws2812-pio = "0.8.0"
+smart-leds = "0.4.0"
+```
+
+Still, there are a lot of problems to use Neopixel LED.
+

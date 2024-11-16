@@ -11,6 +11,7 @@
 #![no_main]
 
 use cortex_m::delay::Delay;
+use embedded_hal::digital::OutputPin;
 
 use hal::clocks::Clock;
 use hal::gpio::Pins;
@@ -22,15 +23,18 @@ use panic_halt as _;
 
 //use hal::pio::PIOExt;
 //use hal::Timer;
+//use embedded_hal_0_2::timer::{CountDown, Cancel};
+use rp2040_hal;
 
-//use smart_leds::SmartLedsWrite;
-//use smart_leds::RGB8;
-//use ws2812_pio::Ws2812;
 
-//const LUMINOSITY: u8 = 10;
-//const RED: RGB8 = RGB8::new(LUMINOSITY, 0, 0);
-//const GREEN: RGB8 = RGB8::new(0, LUMINOSITY, 0);
-//const BLUE: RGB8 = RGB8::new(0, 0, LUMINOSITY);
+use smart_leds::SmartLedsWrite;
+use smart_leds::RGB8;
+use ws2812_pio::Ws2812;
+
+const LUMINOSITY: u8 = 10;
+const RED: RGB8 = RGB8::new(LUMINOSITY, 0, 0);
+const GREEN: RGB8 = RGB8::new(0, LUMINOSITY, 0);
+const BLUE: RGB8 = RGB8::new(0, 0, LUMINOSITY);
 
 // Alias for our HAL crate
 use rp2040_hal as hal;
@@ -40,7 +44,7 @@ use rp2040_hal as hal;
 use hal::pac;
 
 // Some traits we need
-use embedded_hal::digital::StatefulOutputPin;
+//use embedded_hal::digital::StatefulOutputPin;
 
 /// The linker will place this boot block at the start of our program image. We
 /// need this to help the ROM bootloader get our code up and running.
@@ -116,15 +120,15 @@ fn main() -> ! {
     // Set up the delay for the first core.
     let sys_freq = clocks.system_clock.freq().to_Hz();
     let mut delay = Delay::new(core.SYST, sys_freq);
-
 /*
     // Set up for neopixel
-    let timer = Timer::new(pac.TIMER, &mut pac.RESETS);
+    let mut clocks = init_clocks_and_plls(XOSC_CRYSTAL_FREQ, peripherals.XOSC, peripherals.CLOCKS, peripherals.PLL_SYS, peripherals.PLL_USB, &mut peripherals.RESETS, &mut watchdog).ok().unwrap();
+    let timer = Timer::new(pac.TIMER, &mut pac.RESETS, &clocks);
     // PIO for neopixel
     let (mut pio, sm0, _, _, _) = pac.PIO0.split(&mut pac.RESETS);
     // RGB neopixel LED
     let mut ws = Ws2812::new(
-        pins.neopixel_data.into_mode(),
+        pins.gpio12.into_mode(),
         &mut pio,
         sm0,
         clocks.peripheral_clock.freq(),
@@ -148,19 +152,48 @@ fn main() -> ! {
             let core = unsafe { pac::CorePeripherals::steal() };
             // Set up the delay for the second core.
             let mut delay = Delay::new(core.SYST, sys_freq);
-            // Blink the second LED.
+            // Blink the USER LED.
             loop {
-                led_red.toggle().unwrap();
-                led_blue.toggle().unwrap();
-                delay.delay_us(CORE1_DELAY)
+                //led_red.toggle().unwrap();
+                //led_blue.toggle().unwrap();
+                //delay.delay_us(CORE1_DELAY)
+                // blue
+                led_blue.set_low().unwrap();
+                led_red.set_high().unwrap();
+                //led_green.set_high().unwrap();
+                delay.delay_us(CORE1_DELAY);
+                // red
+                led_blue.set_high().unwrap();
+                led_red.set_low().unwrap();
+                //led_green.set_high().unwrap();
+                delay.delay_us(CORE1_DELAY);
+                // green
+                led_blue.set_high().unwrap();
+                led_red.set_high().unwrap();
+                //led_green.set_low().unwrap();
+                delay.delay_us(CORE1_DELAY);
             }
         })
         .unwrap();
 
-    // Blink the first LED.
+    // Blink the Neopixel LED.
     loop {
-        led_green.toggle().unwrap();
-        delay.delay_us(CORE0_DELAY)
+        //led_green.toggle().unwrap();
+        led_green.set_low().unwrap();
+        delay.delay_us(CORE0_DELAY);
+        led_green.set_high().unwrap();
+        delay.delay_us(CORE0_DELAY);
+/*  
+        // Set RGB LED to blue
+        ws.write([BLUE].iter().copied()).unwrap();
+        delay.delay_us(CORE0_DELAY);
+        // Set RGB LED to red
+        ws.write([RED].iter().copied()).unwrap();
+        delay.delay_us(CORE0_DELAY);
+        // Set RGB LED to green
+        ws.write([GREEN].iter().copied()).unwrap();
+        delay.delay_us(CORE0_DELAY);
+*/
     }
 }
 
