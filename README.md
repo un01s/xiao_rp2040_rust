@@ -1,6 +1,6 @@
 # Rust on XIAO RP2040 with WS2812
 
-## setup 
+## [setup](https://github.com/tutoduino/xiao_rp2040_rs/) 
 
 Rust program that blinks the USER LED and RGB LED on a Seeed Studio XIAO RP2040 board using ws2812-pio
 
@@ -11,6 +11,8 @@ Rust program that blinks the USER LED and RGB LED on a Seeed Studio XIAO RP2040 
 built after adjusting the memory.x. but the code does not seem to run.
 
 ### second try
+
+The dependencies are a lot more tricky.
 
 * check ```Cargo.toml```: it uses ```seeeduino-xiao-rp2040``` package and other dependencies.
 
@@ -42,4 +44,5 @@ built after adjusting the memory.x. but the code does not seem to run.
 ```
 pub const XOSC_CRYSTAL_FREQ: u32 = 12_000_000;
 ```
+
 

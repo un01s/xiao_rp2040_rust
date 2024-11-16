@@ -1,12 +1,14 @@
 [package]
 name = "xiao_rp2040_rs"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 description = "XIAO RP2040 RGB LED Blinking"
 license = "MIT"
+repository = "https://github.com/rp-rs/rp-hal.git"
 
 [dependencies]
 cortex-m = "0.7.6"
+critical-section = "1.2.0"
 seeeduino-xiao-rp2040 = "0.2.0"
 panic-halt = "0.2.0"
 embedded-hal = "0.2.7"
