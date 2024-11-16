@@ -83,14 +83,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c1706d332edc22aef4d9f23a6bb1c92360a403013c291af51247a737472dcae6"
 dependencies = [
  "bare-metal 1.0.0",
- "critical-section 1.2.0",
+ "critical-section 1.1.1",
 ]
 
 [[package]]
 name = "critical-section"
-version = "1.2.0"
+version = "1.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "790eea4361631c5e7d22598ecd5723ff611904e3344ce8720784c93e3d83d40b"
+checksum = "6548a0ad5d2549e111e1f6a11a6c2e2d00ce6a3dafe22948d67c2b443f775e52"
 
 [[package]]
 name = "debug-helper"
@@ -247,7 +247,7 @@ dependencies = [
  "cortex-m",
  "cortex-m-rt",
  "critical-section 0.2.8",
- "critical-section 1.2.0",
+ "critical-section 1.1.1",
  "embedded-hal",
  "fugit",
  "itertools",
@@ -404,7 +404,6 @@ version = "0.1.0"
 dependencies = [
  "cortex-m",
  "cortex-m-rt",
- "critical-section 1.2.0",
  "embedded-hal",
  "panic-halt",
  "rp2040-boot2",

@@ -1,3 +1,10 @@
+//! XIAO RP2040 Blinking LED Example
+//!
+//! https://tutoduino.fr/
+//!
+//! Blinks the USER LED and NeoPixel RGB LED on a Seeed Studio XIAO RP2040 board.
+//!
+
 #![no_std]
 #![no_main]
 
@@ -17,7 +24,6 @@ const LUMINOSITY: u8 = 10;
 const RED: RGB8 = RGB8::new(LUMINOSITY, 0, 0);
 const GREEN: RGB8 = RGB8::new(0, LUMINOSITY, 0);
 const BLUE: RGB8 = RGB8::new(0, 0, LUMINOSITY);
-const WHITE: RGB8 = RGB8::new(LUMINOSITY / 3, LUMINOSITY / 3, LUMINOSITY / 3);
 
 /// Entry point to our bare-metal application.
 ///
@@ -110,14 +116,6 @@ fn main() -> ! {
         led_green_pin.set_low().unwrap();
         // Set RGB LED to green
         ws.write([GREEN].iter().copied()).unwrap();
-        delay.delay_ms(500);
-
-        // Set USER LED to white
-        led_blue_pin.set_low().unwrap();
-        led_red_pin.set_low().unwrap();
-        led_green_pin.set_low().unwrap();
-        // Set RGB LED to white
-        ws.write([WHITE].iter().copied()).unwrap();
         delay.delay_ms(500);
     }
 }
