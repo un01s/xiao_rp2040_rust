@@ -317,11 +317,11 @@ fn main() -> ! {
             .unwrap();
 
         // Wait a bit until calculating the next frame:
-        frame_delay.delay_ms(16); // ~60 FPS
+        frame_delay.delay_ms(12); // 16 => ~60 FPS
 
         // Increase the time counter variable and make sure it
         // stays inbetween 0.0 to 1.0 range:
-        t += (16.0 / 1000.0) * animation_speed;
+        t += (12.0 / 1000.0) * animation_speed;
         while t > 1.0 {
             t -= 1.0;
         }
